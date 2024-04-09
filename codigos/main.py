@@ -34,8 +34,8 @@ while init == 's':
         custo_produto = float(input('Custo do produto: '))
         custo_imposto = float(input('Imposto: '))
         comissão_vendas = float(input('Comissão da venda: '))
-        margem_lucro = float(input('Rentabilidade: '))
         custo_fixo = float(input('Custo fixo: '))
+        margem_lucro = float(input('Rentabilidade: '))
 
 
 
@@ -47,17 +47,18 @@ while init == 's':
         print(comissão_vendas)
         print(margem_lucro)
         print(custo_fixo)
-        l =custo_produto * ((custo_fixo/100) + (comissão_vendas/100) + (custo_imposto/100))
-        pv  = l+(custo_produto * ((margem_lucro/100)+1))
+        totalPorcentagens =custo_produto * ((custo_fixo/100) + (comissão_vendas/100) + (custo_imposto/100))
+        totalGastos = totalPorcentagens +custo_produto
+        pv  = totalPorcentagens+(custo_produto * ((margem_lucro/100)+1))
         print(f"{pv}")
 
-        if pv> (l*1.2):
+        if pv > (totalGastos *1.2):
             print('Margem de lucro alta')
-        elif pv <= (l*1.2) and pv > (l*1.1):
+        elif pv <= (totalGastos *1.2) and pv > (totalGastos *1.1):
             print('Margem de lucro média')
-        elif pv <= (l*1.1) and pv > (l*1):
+        elif pv <= (totalGastos *1.1) and pv > (totalGastos *1):
             print('Margem de lucro baixa')
-        elif pv == l:
+        elif pv == totalGastos:
             print('Equilibrio')
         else:
             print('Prejuizo')        
