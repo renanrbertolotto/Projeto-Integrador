@@ -5,17 +5,14 @@ import getpass
 
 
 def conectar_banco():
-    try:
-        connection = oracledb.connect(
-            user = "system",
-            password = 'oracle',
-            dsn = "localhost/xe")
-        print("conectado")
-        return connection
+    connection = oracledb.connect(
+        user = "system ",
+        password = 'oracle',
+        dsn = "localhost/xe")
+    print("conectado")
+    return connection
 
-    except oracledb.DatabaseError as erro:
-        print('Erro: ', erro)
-        return None
+
 
 def tabela_existe(connection, nome_tabela):
     try:
@@ -26,10 +23,9 @@ def tabela_existe(connection, nome_tabela):
         return False
     
 def criar_tabela(connection):
-    try:
-        cursor = connection.cursor()
-        if not tabela_existe(connection, 'PIprodutos'):
-            cursor.execute("""
+    cursor = connection.cursor()
+    if not tabela_existe(connection, 'PIprodutos'):
+        cursor.execute("""
                 CREATE TABLE PIProdutos (
                     idProduto INT PRIMARY KEY,
                     nome VARCHAR2(255),
@@ -38,17 +34,14 @@ def criar_tabela(connection):
                     custofixo DECIMAL(12, 2),
                     comissao DECIMAL(12, 2),
                     imposto DECIMAL(12, 2),
-                    margemLucro DECIMAL(12, 2),
-                    rentabilidade VARCHAR2(255),
-                    precoVenda DECIMAL(12, 2)
+                    margemLucro DECIMAL(12, 2)
                 )""")
-            connection.commit()
-            cursor.close()
-            print('TABELA CRIADA')
-        else:
-            print("A tabela PIprodutos já existe!")
-    except oracledb.DatabaseError as erro:
-        print('Erro:', erro)
+        connection.commit()
+        cursor.close()
+        print('TABELA CRIADA')
+    else:
+        print("A tabela PIprodutos já existe!")
+
     
 conexao = conectar_banco()
 
